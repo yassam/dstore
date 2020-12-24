@@ -300,7 +300,14 @@ define([
 
 			var value = 'items=' + start + '-' + (end - 1);
 			return {
-				'Range': value,
+                // Yasir 2020/12/24: Using 'Range' in header causes
+                // Chrome to issue header 'Accept-Encoding' with value
+                // 'identity'. This prevents the server from
+                // responding with the gzip encoding. See
+                // https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
+                // item 15.
+                //
+				// 'Range': value,
 				'X-Range': value //set X-Range for Opera since it blocks "Range" header
 			};
 		}
