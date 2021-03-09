@@ -150,7 +150,14 @@ define([
 			// first update the cache, we are going to assume the update is valid while we wait to
 			// hear from the master store
 			var cachingStore = this.cachingStore;
-			cachingStore.put(object, directives);
+            // Yasir 2021-03-10: The following cachingStore.put() has
+            // been commented out. See https://github.com/SitePen/dstore/issues/218
+            // If you're adding a new element with a cache backed Rest store,
+            // the following calls adds a random ID which turns the POST in
+            // the following Rest call into a PUT which fails. As per the bug report above
+            // let Rest do its thing then update the cache afterwards.
+            //
+			// --- cachingStore.put(object, directives);
 			return when(this.inherited(arguments)).then(function (result) {
 				// now put result in cache
 				var cachedPutResult =
